@@ -1,0 +1,2135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="Leizhuo_UnderWaterHexapodRobot">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0140644642154403 8.12148635065402E-07 -0.00285537249700155"
+        rpy="0 0 0" />
+      <mass
+        value="1.86312414553283" />
+      <inertia
+        ixx="0.0103958684186078"
+        ixy="4.19274043488902E-07"
+        ixz="-0.00029958408384001"
+        iyy="0.0108668461966651"
+        iyz="5.17077755968618E-07"
+        izz="0.0189300328088789" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="RM_JIAN_LINK">
+    <inertial>
+      <origin
+        xyz="0.0196773637758696 5.55111512312578E-17 -5.16151762313538E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0549972808983075" />
+      <inertia
+        ixx="4.23010594926854E-05"
+        ixy="-1.3566991482621E-21"
+        ixz="1.35585489027472E-09"
+        iyy="2.86824937380955E-05"
+        iyz="-1.50417145504381E-21"
+        izz="2.6351810532033E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_JIAN_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_JIAN_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_JIAN_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 -0.14979 -0.0032"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="RM_JIAN_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RM_ZHOU_LINK">
+    <inertial>
+      <origin
+        xyz="0.0273253277440405 0.00746540118277407 4.77014552013322E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0896688686339838" />
+      <inertia
+        ixx="3.90649680814428E-05"
+        ixy="7.26305459227445E-06"
+        ixz="6.19794490507559E-08"
+        iyy="4.18346884886829E-05"
+        iyz="-1.1410981612624E-10"
+        izz="2.91896419363059E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_ZHOU_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_ZHOU_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_ZHOU_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.0415 -0.0004 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="RM_JIAN_LINK" />
+    <child
+      link="RM_ZHOU_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RM_XI_LINK">
+    <inertial>
+      <origin
+        xyz="0.0456240041232431 0.016713303171313 -4.28951188229942E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.151186314817192" />
+      <inertia
+        ixx="5.25757095356791E-05"
+        ixy="-6.3554697994671E-06"
+        ixz="4.66190861095013E-08"
+        iyy="0.000227814075117788"
+        iyz="7.31689308620056E-09"
+        izz="0.000204493892166539" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_XI_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_XI_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_XI_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.063 0 -0.0004"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="RM_ZHOU_LINK" />
+    <child
+      link="RM_XI_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RM_R_LINK">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0 -2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="3.58732406867153E-43"
+        ixz="9.18354961579912E-41"
+        iyy="1.67551608191456E-12"
+        iyz="-4.37989597684327E-38"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_R_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_R_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_R_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.15047 0.0305 0"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="RM_XI_LINK" />
+    <child
+      link="RM_R_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RM_P_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 0 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="4.37989597684327E-38"
+        ixz="0"
+        iyy="1.67551608191456E-12"
+        iyz="3.58732406867153E-43"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_P_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_P_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_P_LINK"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="RM_R_LINK" />
+    <child
+      link="RM_P_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RM_Y_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 -5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="-9.18354961579912E-41"
+        ixz="-4.37988700853309E-38"
+        iyy="1.67551608191456E-12"
+        iyz="0"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_Y_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RM_Y_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RM_Y_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="RM_P_LINK" />
+    <child
+      link="RM_Y_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RF_JIAN_LINK">
+    <inertial>
+      <origin
+        xyz="0.0196773637758696 5.55111512312578E-17 -5.16151762312844E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0549972808983075" />
+      <inertia
+        ixx="4.23010594926854E-05"
+        ixy="3.17831599643912E-21"
+        ixz="1.35585489027564E-09"
+        iyy="2.86824937380955E-05"
+        iyz="2.81893688903335E-21"
+        izz="2.6351810532033E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_JIAN_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_JIAN_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_JIAN_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.061 -0.14979 -0.0032"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="RF_JIAN_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RF_ZHOU_LINK">
+    <inertial>
+      <origin
+        xyz="0.0273253277440404 0.00746540118277408 4.77014552013322E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0896688686339835" />
+      <inertia
+        ixx="3.90649680814426E-05"
+        ixy="7.26305459227434E-06"
+        ixz="6.19794490508564E-08"
+        iyy="4.18346884886825E-05"
+        iyz="-1.14109816095196E-10"
+        izz="2.91896419363056E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_ZHOU_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_ZHOU_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_ZHOU_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.0415 -0.0004 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="RF_JIAN_LINK" />
+    <child
+      link="RF_ZHOU_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RF_XI_LINK">
+    <inertial>
+      <origin
+        xyz="0.0456240042302304 0.0167133031666421 -4.28951844866909E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.151186314373616" />
+      <inertia
+        ixx="5.25757092902444E-05"
+        ixy="-6.35546973733345E-06"
+        ixz="4.66185774839964E-08"
+        iyy="0.00022781407378131"
+        iyz="7.31686178510528E-09"
+        izz="0.000204493891057307" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_XI_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_XI_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_XI_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.063 0 -0.0004"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="RF_ZHOU_LINK" />
+    <child
+      link="RF_XI_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RF_R_LINK">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="3.58732406867153E-43"
+        ixz="9.18354961579912E-41"
+        iyy="1.67551608191456E-12"
+        iyz="-4.37989597684327E-38"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_R_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_R_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_R_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.15047 0.0305 0"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="RF_XI_LINK" />
+    <child
+      link="RF_R_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RF_P_LINK">
+    <inertial>
+      <origin
+        xyz="0 0 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="4.37989597684327E-38"
+        ixz="0"
+        iyy="1.67551608191456E-12"
+        iyz="3.58732406867153E-43"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_P_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_P_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_P_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="RF_R_LINK" />
+    <child
+      link="RF_P_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RF_Y_LINK">
+    <inertial>
+      <origin
+        xyz="0 -5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="-9.18354961579912E-41"
+        ixz="-4.37988700853309E-38"
+        iyy="1.67551608191456E-12"
+        iyz="0"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_Y_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RF_Y_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RF_Y_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="RF_P_LINK" />
+    <child
+      link="RF_Y_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LF_JIAN_LINK">
+    <inertial>
+      <origin
+        xyz="0.0196773637758696 -5.55111512312578E-17 -5.16151762314232E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0549972808983075" />
+      <inertia
+        ixx="4.23010594926854E-05"
+        ixy="7.45006923162369E-21"
+        ixz="1.35585489027197E-09"
+        iyy="2.86824937380955E-05"
+        iyz="3.35178306925782E-21"
+        izz="2.6351810532033E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_JIAN_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_JIAN_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_JIAN_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.061 0.14979 -0.0032"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="LF_JIAN_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LF_ZHOU_LINK">
+    <inertial>
+      <origin
+        xyz="0.0273253277440404 0.00746540118277409 4.77014552012212E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0896688686339838" />
+      <inertia
+        ixx="3.90649680814427E-05"
+        ixy="7.26305459227442E-06"
+        ixz="6.19794490507996E-08"
+        iyy="4.18346884886828E-05"
+        iyz="-1.14109816157686E-10"
+        izz="2.91896419363058E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_ZHOU_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_ZHOU_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_ZHOU_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.0415 -0.0004 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="LF_JIAN_LINK" />
+    <child
+      link="LF_ZHOU_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LF_XI_LINK">
+    <inertial>
+      <origin
+        xyz="0.0456240041232434 0.0167133031713129 -4.28951188230497E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.151186314817191" />
+      <inertia
+        ixx="5.25757095356789E-05"
+        ixy="-6.35546979946716E-06"
+        ixz="4.66190861086835E-08"
+        iyy="0.000227814075117784"
+        iyz="7.31689308622861E-09"
+        izz="0.000204493892166536" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_XI_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_XI_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_XI_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.063 0 -0.0004"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="LF_ZHOU_LINK" />
+    <child
+      link="LF_XI_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LF_R_LINK">
+    <inertial>
+      <origin
+        xyz="0 5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="3.58732406867153E-43"
+        ixz="9.18354961579912E-41"
+        iyy="1.67551608191456E-12"
+        iyz="-4.37989597684327E-38"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_R_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_R_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_R_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.15047 0.0305 0"
+      rpy="3.1416 -1.5708 0" />
+    <parent
+      link="LF_XI_LINK" />
+    <child
+      link="LF_R_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LF_P_LINK">
+    <inertial>
+      <origin
+        xyz="0 5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="4.37989597684327E-38"
+        ixz="0"
+        iyy="1.67551608191456E-12"
+        iyz="3.58732406867153E-43"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_P_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_P_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_P_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="LF_R_LINK" />
+    <child
+      link="LF_P_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LF_Y_LINK">
+    <inertial>
+      <origin
+        xyz="0 0 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="-9.18354961579912E-41"
+        ixz="-4.37988700853309E-38"
+        iyy="1.67551608191456E-12"
+        iyz="0"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_Y_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LF_Y_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LF_Y_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="LF_P_LINK" />
+    <child
+      link="LF_Y_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LM_JIAN_LINK">
+    <inertial>
+      <origin
+        xyz="0.0196773637758696 -5.55111512312578E-17 -5.16151762314926E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0549972808983076" />
+      <inertia
+        ixx="4.23010594926855E-05"
+        ixy="1.36600939672745E-21"
+        ixz="1.35585489027903E-09"
+        iyy="2.86824937380956E-05"
+        iyz="-2.09688676938112E-21"
+        izz="2.63518105320331E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_JIAN_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_JIAN_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_JIAN_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0.14979 -0.0032"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="LM_JIAN_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LM_ZHOU_LINK">
+    <inertial>
+      <origin
+        xyz="0.0273253277440405 0.00746540118277408 4.77014552012212E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0896688686339835" />
+      <inertia
+        ixx="3.90649680814426E-05"
+        ixy="7.26305459227438E-06"
+        ixz="6.19794490508138E-08"
+        iyy="4.18346884886827E-05"
+        iyz="-1.14109816126972E-10"
+        izz="2.91896419363057E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_ZHOU_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_ZHOU_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_ZHOU_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.0415 -0.0004 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="LM_JIAN_LINK" />
+    <child
+      link="LM_ZHOU_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LM_XI_LINK">
+    <inertial>
+      <origin
+        xyz="0.0456240042302298 0.0167133031666421 -4.28951844865799E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.151186314373618" />
+      <inertia
+        ixx="5.25757092902447E-05"
+        ixy="-6.35546973733313E-06"
+        ixz="4.66185774853223E-08"
+        iyy="0.000227814073781316"
+        iyz="7.31686178526951E-09"
+        izz="0.000204493891057312" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_XI_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_XI_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_XI_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.063 0 -0.0004"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="LM_ZHOU_LINK" />
+    <child
+      link="LM_XI_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LM_R_LINK">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0 -2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="3.58732406867153E-43"
+        ixz="9.18354961579912E-41"
+        iyy="1.67551608191456E-12"
+        iyz="-4.37989597684327E-38"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_R_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_R_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_R_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.15047 0.0305 0"
+      rpy="3.1416 -1.5708 0" />
+    <parent
+      link="LM_XI_LINK" />
+    <child
+      link="LM_R_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LM_P_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 0 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="4.37989597684327E-38"
+        ixz="0"
+        iyy="1.67551608191456E-12"
+        iyz="3.58732406867153E-43"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_P_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_P_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_P_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="LM_R_LINK" />
+    <child
+      link="LM_P_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LM_Y_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 -5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="-9.18354961579912E-41"
+        ixz="-4.37988700853309E-38"
+        iyy="1.67551608191456E-12"
+        iyz="0"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_Y_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LM_Y_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LM_Y_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="LM_P_LINK" />
+    <child
+      link="LM_Y_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LB_JIAN_LINK">
+    <inertial>
+      <origin
+        xyz="0.0196773637758696 -5.55111512312578E-17 -5.16151762313538E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0549972808983075" />
+      <inertia
+        ixx="4.23010594926854E-05"
+        ixy="1.3046252668176E-21"
+        ixz="1.35585489027052E-09"
+        iyy="2.86824937380955E-05"
+        iyz="6.19208968321074E-21"
+        izz="2.6351810532033E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_JIAN_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_JIAN_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_JIAN_JOINT"
+    type="revolute">
+    <origin
+      xyz="-0.061 0.14979 -0.0032"
+      rpy="0 0 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="LB_JIAN_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LB_ZHOU_LINK">
+    <inertial>
+      <origin
+        xyz="0.0273253277440404 0.0074654011827741 4.77014552014432E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0896688686339838" />
+      <inertia
+        ixx="3.90649680814427E-05"
+        ixy="7.26305459227445E-06"
+        ixz="6.19794490506186E-08"
+        iyy="4.18346884886829E-05"
+        iyz="-1.1410981601099E-10"
+        izz="2.9189641936306E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_ZHOU_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_ZHOU_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_ZHOU_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.0415 -0.0004 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="LB_JIAN_LINK" />
+    <child
+      link="LB_ZHOU_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LB_XI_LINK">
+    <inertial>
+      <origin
+        xyz="0.0456240042302302 0.0167133031666421 -4.2895184486802E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.151186314373617" />
+      <inertia
+        ixx="5.2575709290245E-05"
+        ixy="-6.35546973733394E-06"
+        ixz="4.66185774841948E-08"
+        iyy="0.000227814073781312"
+        iyz="7.31686178495679E-09"
+        izz="0.000204493891057308" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_XI_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_XI_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_XI_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.063 0 -0.0004"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="LB_ZHOU_LINK" />
+    <child
+      link="LB_XI_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LB_R_LINK">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0 -2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="3.58732406867153E-43"
+        ixz="9.18354961579912E-41"
+        iyy="1.67551608191456E-12"
+        iyz="-4.37989597684327E-38"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_R_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_R_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_R_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.15047 0.0305 0"
+      rpy="3.1416 -1.5708 0" />
+    <parent
+      link="LB_XI_LINK" />
+    <child
+      link="LB_R_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LB_P_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 0 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="4.37989597684327E-38"
+        ixz="0"
+        iyy="1.67551608191456E-12"
+        iyz="3.58732406867153E-43"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_P_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_P_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_P_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="LB_R_LINK" />
+    <child
+      link="LB_P_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LB_Y_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 -5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="-9.18354961579912E-41"
+        ixz="-4.37988700853309E-38"
+        iyy="1.67551608191456E-12"
+        iyz="0"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_Y_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/LB_Y_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LB_Y_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="LB_P_LINK" />
+    <child
+      link="LB_Y_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RB_JIAN_LINK">
+    <inertial>
+      <origin
+        xyz="0.0196773637758696 0 -5.16151762313538E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0549972808983075" />
+      <inertia
+        ixx="4.23010594926854E-05"
+        ixy="-9.93858875856596E-22"
+        ixz="1.35585489027513E-09"
+        iyy="2.86824937380955E-05"
+        iyz="-1.56214791546156E-21"
+        izz="2.6351810532033E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_JIAN_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_JIAN_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_JIAN_JOINT"
+    type="revolute">
+    <origin
+      xyz="-0.061 -0.14979 -0.0032"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="RB_JIAN_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RB_ZHOU_LINK">
+    <inertial>
+      <origin
+        xyz="0.0273253277440405 0.00746540118277407 4.77014552013322E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0896688686339838" />
+      <inertia
+        ixx="3.90649680814429E-05"
+        ixy="7.26305459227443E-06"
+        ixz="6.19794490507978E-08"
+        iyy="4.18346884886829E-05"
+        iyz="-1.14109816109859E-10"
+        izz="2.91896419363059E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_ZHOU_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_ZHOU_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_ZHOU_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.0415 -0.0004 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="RB_JIAN_LINK" />
+    <child
+      link="RB_ZHOU_LINK" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RB_XI_LINK">
+    <inertial>
+      <origin
+        xyz="0.0456240041232432 0.0167133031713129 -4.28951188230497E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.151186314817192" />
+      <inertia
+        ixx="5.2575709535679E-05"
+        ixy="-6.35546979946716E-06"
+        ixz="4.66190861091123E-08"
+        iyy="0.000227814075117787"
+        iyz="7.31689308612038E-09"
+        izz="0.000204493892166538" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_XI_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_XI_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_XI_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.063 0 -0.0004"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="RB_ZHOU_LINK" />
+    <child
+      link="RB_XI_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RB_R_LINK">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 -2.77555756156289E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="3.58732406867153E-43"
+        ixz="9.18354961579912E-41"
+        iyy="1.67551608191456E-12"
+        iyz="-4.37989597684327E-38"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_R_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_R_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_R_JOINT"
+    type="revolute">
+    <origin
+      xyz="0.15047 0.0305 0"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="RB_XI_LINK" />
+    <child
+      link="RB_R_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RB_P_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 0 -5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="4.37989597684327E-38"
+        ixz="0"
+        iyy="1.67551608191456E-12"
+        iyz="3.58732406867153E-43"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_P_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_P_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_P_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 1.5708 0" />
+    <parent
+      link="RB_R_LINK" />
+    <child
+      link="RB_P_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="RB_Y_LINK">
+    <inertial>
+      <origin
+        xyz="2.77555756156289E-17 -5.55111512312578E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="4.18879020478639E-06" />
+      <inertia
+        ixx="1.67551608191456E-12"
+        ixy="-9.18354961579912E-41"
+        ixz="-4.37988700853309E-38"
+        iyy="1.67551608191456E-12"
+        iyz="0"
+        izz="1.67551608191456E-12" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_Y_LINK.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Leizhuo_UnderWaterHexapodRobot/meshes/RB_Y_LINK.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RB_Y_JOINT"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="RB_P_LINK" />
+    <child
+      link="RB_Y_LINK" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5708"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>
