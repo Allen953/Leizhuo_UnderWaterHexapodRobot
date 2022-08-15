@@ -32,8 +32,13 @@ include_directories(
   ${orocos_kdl_INCLUDE_DIRS}
 )
 
+
+
 add_executable(Leizhuo_UnderWaterHexapodRobot src/Leizhuo_UnderWaterHexapodRobot.cpp)
 target_link_libraries(Leizhuo_UnderWaterHexapodRobot ${catkin_LIBRARIES} ${orocos_kdl_LIBRARIES})
+
+add_executable(Leizhuo_UnderWaterHexapodRobotMaoStep src/Leizhuo_UnderWaterHexapodRobotMaoStep.cpp)
+target_link_libraries(Leizhuo_UnderWaterHexapodRobotMaoStep ${catkin_LIBRARIES} ${orocos_kdl_LIBRARIES})
 
 foreach(dir config launch meshes urdf)
 	install(DIRECTORY ${dir}/
