@@ -12,5 +12,5 @@
 
 步态规划：
 
-![步态规划](https://github.com/Allen953/Leizhuo_UnderWaterHexapodRobot/blob/main/7.Photos%20%26%20Videos/QQ%E5%9B%BE%E7%89%8720220815123440.jpg)
+![步态规划](https://github.com/Allen953/Leizhuo_UnderWaterHexapodRobot/blob/main/7.Photos%20%26%20Videos/QQ%E5%9B%BE%E7%89%8720220815125429.png)
 
