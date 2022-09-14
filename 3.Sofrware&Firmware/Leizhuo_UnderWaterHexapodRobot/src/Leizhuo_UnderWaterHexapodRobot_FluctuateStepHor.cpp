@@ -20,11 +20,10 @@
 #include "geometry_msgs/PointStamped.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_ros/buffer.h"
-#include "Leizhuo_UnderWaterHexapodRobot/joint.h"
 
 #define pi 3.141592653
 
-#define stepx 0.014
+#define stepx 0.010
 #define stepz 0.02
 
 int main(int argc,char* argv[])
@@ -39,8 +38,7 @@ int main(int argc,char* argv[])
     geometry_msgs::TransformStamped ts;
     KDL::Vector v1(1,1,1);
  
-    ros::Publisher hexapod_jointpub=nh.advertise<Leizhuo_UnderWaterHexapodRobot::joint>("hexapod_joint",1);
-    Leizhuo_UnderWaterHexapodRobot::joint hexapod_joint;
+ 
     KDL::Tree my_tree;
     sensor_msgs::JointState joint_state;
  
@@ -373,31 +371,31 @@ int main(int argc,char* argv[])
     for(int i=1;i<=20;i++)
     { 
         double t=2*pi*i/20;
-        double x=stepx*(t-sin(t));
+        double y=stepx*(t-sin(t));
         double z=stepz*(1-cos(t));
         //右边
-        end_effector_pose_rm_now.p.data[0]=end_effector_pose_rmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*5+x;
+        end_effector_pose_rm_now.p.data[1]=end_effector_pose_rmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*5+y;
         end_effector_pose_rm_now.p.data[2]=end_effector_pose_rmstart.p.data[2]+z;
         int rc_rm = tracik_rm_solver.CartToJnt(result_rmlast, end_effector_pose_rm_now, result_rmnow);
 
-        end_effector_pose_rf_now.p.data[0]=end_effector_pose_rfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*1-x*0.2;
+        end_effector_pose_rf_now.p.data[1]=end_effector_pose_rfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*1-y*0.2;
         end_effector_pose_rf_now.p.data[2]=end_effector_pose_rfstart.p.data[2];
         int rc_rf = tracik_rf_solver.CartToJnt(result_rflast, end_effector_pose_rf_now, result_rfnow);
         print_frame_lambda(end_effector_pose_rf_now);
 
-        end_effector_pose_lf_now.p.data[0]=end_effector_pose_lfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*4-x*0.2;
+        end_effector_pose_lf_now.p.data[1]=end_effector_pose_lfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*4-y*0.2;
         end_effector_pose_lf_now.p.data[2]=end_effector_pose_lfstart.p.data[2];
         int rc_lf = tracik_lf_solver.CartToJnt(result_lflast, end_effector_pose_lf_now, result_lfnow);
 
-        end_effector_pose_lm_now.p.data[0]=end_effector_pose_lmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*2-x*0.2;
+        end_effector_pose_lm_now.p.data[1]=end_effector_pose_lmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*2-y*0.2;
         end_effector_pose_lm_now.p.data[2]=end_effector_pose_lmstart.p.data[2];
         int rc_lm = tracik_lm_solver.CartToJnt(result_lmlast, end_effector_pose_lm_now, result_lmnow);
 
-        end_effector_pose_lb_now.p.data[0]=end_effector_pose_lbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*3-x*0.2;
+        end_effector_pose_lb_now.p.data[1]=end_effector_pose_lbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*3-y*0.2;
         end_effector_pose_lb_now.p.data[2]=end_effector_pose_lbstart.p.data[2];
         int rc_lb = tracik_lb_solver.CartToJnt(result_lblast, end_effector_pose_lb_now, result_lbnow);
 
-        end_effector_pose_rb_now.p.data[0]=end_effector_pose_rbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*0-x*0.2;
+        end_effector_pose_rb_now.p.data[1]=end_effector_pose_rbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*0-y*0.2;
         end_effector_pose_rb_now.p.data[2]=end_effector_pose_rbstart.p.data[2];
         int rc_rb= tracik_rb_solver.CartToJnt(result_rblast, end_effector_pose_rb_now, result_rbnow);
 
@@ -419,6 +417,7 @@ int main(int argc,char* argv[])
         joint_state.position[19] = result_lmnow(1);
         joint_state.position[20] = result_lmnow(2);
 
+
         joint_state.position[24] = result_lbnow(0);
         joint_state.position[25] = result_lbnow(1);
         joint_state.position[26] = result_lbnow(2);
@@ -426,37 +425,54 @@ int main(int argc,char* argv[])
         joint_state.position[30] = result_rbnow(0);
         joint_state.position[31] = result_rbnow(1);
         joint_state.position[32] = result_rbnow(2);
-
-        //将数据写入hexapod的arduino话题
-        int m=0;
-        int n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                hexapod_joint.position[m]= joint_state.position[n]*180.0/pi;
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
-        //写入文件
-        m=0,n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fprintf(fp,"%.2f",joint_state.position[n]*180.0/pi);
-	            fputs(",",fp);
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
+	
+    fprintf(fp,"%.2f",joint_state.position[0]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[1]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[2]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[6]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[7]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[8]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[12]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[13]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[14]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[18]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[19]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[20]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[24]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[25]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[26]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[30]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[31]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[32]*180.0/pi);
+	fputs(",",fp);
 	fputs("\n",fp);
 
+//	fputs(joint_state.position[0],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[1],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[2],fp);
+//	fputs(",",fp);
+//	fputs("\n",fp);
+
         joint_pub.publish(joint_state);
-        hexapod_jointpub.publish(hexapod_joint);
  
         result_rmlast=result_rmnow;
         result_rflast=result_rfnow;
@@ -471,31 +487,31 @@ int main(int argc,char* argv[])
    for(int i=1;i<=20;i++)
     { 
         double t=2*pi*i/20;
-        double x=stepx*(t-sin(t));
+        double y=stepx*(t-sin(t));
         double z=stepz*(1-cos(t));
         //右边
-        end_effector_pose_rm_now.p.data[0]=end_effector_pose_rmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*0-x*0.2;
+        end_effector_pose_rm_now.p.data[1]=end_effector_pose_rmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*0-y*0.2;
         end_effector_pose_rm_now.p.data[2]=end_effector_pose_rmstart.p.data[2];
         int rc_rm = tracik_rm_solver.CartToJnt(result_rmlast, end_effector_pose_rm_now, result_rmnow);
 
-        end_effector_pose_rf_now.p.data[0]=end_effector_pose_rfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*2-x*0.2;
+        end_effector_pose_rf_now.p.data[1]=end_effector_pose_rfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*2-y*0.2;
         end_effector_pose_rf_now.p.data[2]=end_effector_pose_rfstart.p.data[2];
         int rc_rf = tracik_rf_solver.CartToJnt(result_rflast, end_effector_pose_rf_now, result_rfnow);
         print_frame_lambda(end_effector_pose_rf_now);
 
-        end_effector_pose_lf_now.p.data[0]=end_effector_pose_lfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*5+x;
+        end_effector_pose_lf_now.p.data[1]=end_effector_pose_lfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*5+y;
         end_effector_pose_lf_now.p.data[2]=end_effector_pose_lfstart.p.data[2]+z;
         int rc_lf = tracik_lf_solver.CartToJnt(result_lflast, end_effector_pose_lf_now, result_lfnow);
 
-        end_effector_pose_lm_now.p.data[0]=end_effector_pose_lmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*3-x*0.2;
+        end_effector_pose_lm_now.p.data[1]=end_effector_pose_lmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*3-y*0.2;
         end_effector_pose_lm_now.p.data[2]=end_effector_pose_lmstart.p.data[2];
         int rc_lm = tracik_lm_solver.CartToJnt(result_lmlast, end_effector_pose_lm_now, result_lmnow);
 
-        end_effector_pose_lb_now.p.data[0]=end_effector_pose_lbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*4-x*0.2;
+        end_effector_pose_lb_now.p.data[1]=end_effector_pose_lbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*4-y*0.2;
         end_effector_pose_lb_now.p.data[2]=end_effector_pose_lbstart.p.data[2];
         int rc_lb = tracik_lb_solver.CartToJnt(result_lblast, end_effector_pose_lb_now, result_lbnow);
 
-        end_effector_pose_rb_now.p.data[0]=end_effector_pose_rbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*1-x*0.2;
+        end_effector_pose_rb_now.p.data[1]=end_effector_pose_rbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*1-y*0.2;
         end_effector_pose_rb_now.p.data[2]=end_effector_pose_rbstart.p.data[2];
         int rc_rb= tracik_rb_solver.CartToJnt(result_rblast, end_effector_pose_rb_now, result_rbnow);
 
@@ -517,6 +533,7 @@ int main(int argc,char* argv[])
         joint_state.position[19] = result_lmnow(1);
         joint_state.position[20] = result_lmnow(2);
 
+
         joint_state.position[24] = result_lbnow(0);
         joint_state.position[25] = result_lbnow(1);
         joint_state.position[26] = result_lbnow(2);
@@ -524,37 +541,54 @@ int main(int argc,char* argv[])
         joint_state.position[30] = result_rbnow(0);
         joint_state.position[31] = result_rbnow(1);
         joint_state.position[32] = result_rbnow(2);
-
-        //将数据写入hexapod的arduino话题
-        int m=0;
-        int n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                hexapod_joint.position[m]= joint_state.position[n]*180.0/pi;
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
-        //写入文件
-        m=0,n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fprintf(fp,"%.2f",joint_state.position[n]*180.0/pi);
-	            fputs(",",fp);
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
+	
+    fprintf(fp,"%.2f",joint_state.position[0]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[1]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[2]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[6]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[7]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[8]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[12]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[13]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[14]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[18]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[19]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[20]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[24]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[25]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[26]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[30]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[31]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[32]*180.0/pi);
+	fputs(",",fp);
 	fputs("\n",fp);
 
+//	fputs(joint_state.position[0],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[1],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[2],fp);
+//	fputs(",",fp);
+//	fputs("\n",fp);
+
         joint_pub.publish(joint_state);
-        hexapod_jointpub.publish(hexapod_joint);
  
         result_rmlast=result_rmnow;
         result_rflast=result_rfnow;
@@ -569,31 +603,31 @@ int main(int argc,char* argv[])
       for(int i=1;i<=20;i++)
     { 
         double t=2*pi*i/20;
-        double x=stepx*(t-sin(t));
+        double y=stepx*(t-sin(t));
         double z=stepz*(1-cos(t));
         //右边
-        end_effector_pose_rm_now.p.data[0]=end_effector_pose_rmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*1-x*0.2;
+        end_effector_pose_rm_now.p.data[1]=end_effector_pose_rmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*1-y*0.2;
         end_effector_pose_rm_now.p.data[2]=end_effector_pose_rmstart.p.data[2];
         int rc_rm = tracik_rm_solver.CartToJnt(result_rmlast, end_effector_pose_rm_now, result_rmnow);
 
-        end_effector_pose_rf_now.p.data[0]=end_effector_pose_rfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*3-x*0.2;
+        end_effector_pose_rf_now.p.data[1]=end_effector_pose_rfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*3-y*0.2;
         end_effector_pose_rf_now.p.data[2]=end_effector_pose_rfstart.p.data[2];
         int rc_rf = tracik_rf_solver.CartToJnt(result_rflast, end_effector_pose_rf_now, result_rfnow);
         print_frame_lambda(end_effector_pose_rf_now);
 
-        end_effector_pose_lf_now.p.data[0]=end_effector_pose_lfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*0-x*0.2;
+        end_effector_pose_lf_now.p.data[1]=end_effector_pose_lfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*0-y*0.2;
         end_effector_pose_lf_now.p.data[2]=end_effector_pose_lfstart.p.data[2];
         int rc_lf = tracik_lf_solver.CartToJnt(result_lflast, end_effector_pose_lf_now, result_lfnow);
 
-        end_effector_pose_lm_now.p.data[0]=end_effector_pose_lmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*4-x*0.2;
+        end_effector_pose_lm_now.p.data[1]=end_effector_pose_lmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*4-y*0.2;
         end_effector_pose_lm_now.p.data[2]=end_effector_pose_lmstart.p.data[2];
         int rc_lm = tracik_lm_solver.CartToJnt(result_lmlast, end_effector_pose_lm_now, result_lmnow);
 
-        end_effector_pose_lb_now.p.data[0]=end_effector_pose_lbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*5+x;
+        end_effector_pose_lb_now.p.data[1]=end_effector_pose_lbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*5+y;
         end_effector_pose_lb_now.p.data[2]=end_effector_pose_lbstart.p.data[2]+z;
         int rc_lb = tracik_lb_solver.CartToJnt(result_lblast, end_effector_pose_lb_now, result_lbnow);
 
-        end_effector_pose_rb_now.p.data[0]=end_effector_pose_rbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*2-x*0.2;
+        end_effector_pose_rb_now.p.data[1]=end_effector_pose_rbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*2-y*0.2;
         end_effector_pose_rb_now.p.data[2]=end_effector_pose_rbstart.p.data[2];
         int rc_rb= tracik_rb_solver.CartToJnt(result_rblast, end_effector_pose_rb_now, result_rbnow);
 
@@ -615,6 +649,7 @@ int main(int argc,char* argv[])
         joint_state.position[19] = result_lmnow(1);
         joint_state.position[20] = result_lmnow(2);
 
+
         joint_state.position[24] = result_lbnow(0);
         joint_state.position[25] = result_lbnow(1);
         joint_state.position[26] = result_lbnow(2);
@@ -622,37 +657,54 @@ int main(int argc,char* argv[])
         joint_state.position[30] = result_rbnow(0);
         joint_state.position[31] = result_rbnow(1);
         joint_state.position[32] = result_rbnow(2);
-
-        //将数据写入hexapod的arduino话题
-        int m=0;
-        int n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                hexapod_joint.position[m]= joint_state.position[n]*180.0/pi;
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
-        //写入文件
-        m=0,n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fprintf(fp,"%.2f",joint_state.position[n]*180.0/pi);
-	            fputs(",",fp);
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
+	
+    fprintf(fp,"%.2f",joint_state.position[0]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[1]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[2]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[6]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[7]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[8]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[12]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[13]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[14]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[18]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[19]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[20]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[24]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[25]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[26]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[30]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[31]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[32]*180.0/pi);
+	fputs(",",fp);
 	fputs("\n",fp);
 
+//	fputs(joint_state.position[0],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[1],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[2],fp);
+//	fputs(",",fp);
+//	fputs("\n",fp);
+
         joint_pub.publish(joint_state);
-        hexapod_jointpub.publish(hexapod_joint);
  
         result_rmlast=result_rmnow;
         result_rflast=result_rfnow;
@@ -667,31 +719,31 @@ int main(int argc,char* argv[])
     for(int i=1;i<=20;i++)
     { 
         double t=2*pi*i/20;
-        double x=stepx*(t-sin(t));
+        double y=stepx*(t-sin(t));
         double z=stepz*(1-cos(t));
         //右边
-        end_effector_pose_rm_now.p.data[0]=end_effector_pose_rmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*2-x*0.2;
+        end_effector_pose_rm_now.p.data[1]=end_effector_pose_rmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*2-y*0.2;
         end_effector_pose_rm_now.p.data[2]=end_effector_pose_rmstart.p.data[2];
         int rc_rm = tracik_rm_solver.CartToJnt(result_rmlast, end_effector_pose_rm_now, result_rmnow);
 
-        end_effector_pose_rf_now.p.data[0]=end_effector_pose_rfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*4-x*0.2;
+        end_effector_pose_rf_now.p.data[1]=end_effector_pose_rfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*4-y*0.2;
         end_effector_pose_rf_now.p.data[2]=end_effector_pose_rfstart.p.data[2];
         int rc_rf = tracik_rf_solver.CartToJnt(result_rflast, end_effector_pose_rf_now, result_rfnow);
         print_frame_lambda(end_effector_pose_rf_now);
 
-        end_effector_pose_lf_now.p.data[0]=end_effector_pose_lfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*1-x*0.2;
+        end_effector_pose_lf_now.p.data[1]=end_effector_pose_lfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*1-y*0.2;
         end_effector_pose_lf_now.p.data[2]=end_effector_pose_lfstart.p.data[2];
         int rc_lf = tracik_lf_solver.CartToJnt(result_lflast, end_effector_pose_lf_now, result_lfnow);
 
-        end_effector_pose_lm_now.p.data[0]=end_effector_pose_lmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*5+x;
+        end_effector_pose_lm_now.p.data[1]=end_effector_pose_lmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*5+y;
         end_effector_pose_lm_now.p.data[2]=end_effector_pose_lmstart.p.data[2]+z;
         int rc_lm = tracik_lm_solver.CartToJnt(result_lmlast, end_effector_pose_lm_now, result_lmnow);
 
-        end_effector_pose_lb_now.p.data[0]=end_effector_pose_lbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*0-x*0.2;
+        end_effector_pose_lb_now.p.data[1]=end_effector_pose_lbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*0-y*0.2;
         end_effector_pose_lb_now.p.data[2]=end_effector_pose_lbstart.p.data[2];
         int rc_lb = tracik_lb_solver.CartToJnt(result_lblast, end_effector_pose_lb_now, result_lbnow);
 
-        end_effector_pose_rb_now.p.data[0]=end_effector_pose_rbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*3-x*0.2;
+        end_effector_pose_rb_now.p.data[1]=end_effector_pose_rbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*3-y*0.2;
         end_effector_pose_rb_now.p.data[2]=end_effector_pose_rbstart.p.data[2];
         int rc_rb= tracik_rb_solver.CartToJnt(result_rblast, end_effector_pose_rb_now, result_rbnow);
 
@@ -713,6 +765,7 @@ int main(int argc,char* argv[])
         joint_state.position[19] = result_lmnow(1);
         joint_state.position[20] = result_lmnow(2);
 
+
         joint_state.position[24] = result_lbnow(0);
         joint_state.position[25] = result_lbnow(1);
         joint_state.position[26] = result_lbnow(2);
@@ -720,37 +773,54 @@ int main(int argc,char* argv[])
         joint_state.position[30] = result_rbnow(0);
         joint_state.position[31] = result_rbnow(1);
         joint_state.position[32] = result_rbnow(2);
-
-        //将数据写入hexapod的arduino话题
-        int m=0;
-        int n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                hexapod_joint.position[m]= joint_state.position[n]*180.0/pi;
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
-        //写入文件
-        m=0,n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fprintf(fp,"%.2f",joint_state.position[n]*180.0/pi);
-	            fputs(",",fp);
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
+	
+    fprintf(fp,"%.2f",joint_state.position[0]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[1]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[2]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[6]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[7]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[8]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[12]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[13]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[14]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[18]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[19]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[20]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[24]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[25]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[26]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[30]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[31]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[32]*180.0/pi);
+	fputs(",",fp);
 	fputs("\n",fp);
 
+//	fputs(joint_state.position[0],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[1],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[2],fp);
+//	fputs(",",fp);
+//	fputs("\n",fp);
+
         joint_pub.publish(joint_state);
-        hexapod_jointpub.publish(hexapod_joint);
  
         result_rmlast=result_rmnow;
         result_rflast=result_rfnow;
@@ -765,31 +835,31 @@ int main(int argc,char* argv[])
     for(int i=1;i<=20;i++)
     { 
         double t=2*pi*i/20;
-        double x=stepx*(t-sin(t));
+        double y=stepx*(t-sin(t));
         double z=stepz*(1-cos(t));
         //右边
-        end_effector_pose_rm_now.p.data[0]=end_effector_pose_rmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*3-x*0.2;
+        end_effector_pose_rm_now.p.data[1]=end_effector_pose_rmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*3-y*0.2;
         end_effector_pose_rm_now.p.data[2]=end_effector_pose_rmstart.p.data[2];
         int rc_rm = tracik_rm_solver.CartToJnt(result_rmlast, end_effector_pose_rm_now, result_rmnow);
 
-        end_effector_pose_rf_now.p.data[0]=end_effector_pose_rfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*5+x;
+        end_effector_pose_rf_now.p.data[1]=end_effector_pose_rfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*5+y;
         end_effector_pose_rf_now.p.data[2]=end_effector_pose_rfstart.p.data[2]+z;
         int rc_rf = tracik_rf_solver.CartToJnt(result_rflast, end_effector_pose_rf_now, result_rfnow);
         print_frame_lambda(end_effector_pose_rf_now);
 
-        end_effector_pose_lf_now.p.data[0]=end_effector_pose_lfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*2-x*0.2;
+        end_effector_pose_lf_now.p.data[1]=end_effector_pose_lfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*2-y*0.2;
         end_effector_pose_lf_now.p.data[2]=end_effector_pose_lfstart.p.data[2];
         int rc_lf = tracik_lf_solver.CartToJnt(result_lflast, end_effector_pose_lf_now, result_lfnow);
 
-        end_effector_pose_lm_now.p.data[0]=end_effector_pose_lmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*0-x*0.2;
+        end_effector_pose_lm_now.p.data[1]=end_effector_pose_lmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*0-y*0.2;
         end_effector_pose_lm_now.p.data[2]=end_effector_pose_lmstart.p.data[2];
         int rc_lm = tracik_lm_solver.CartToJnt(result_lmlast, end_effector_pose_lm_now, result_lmnow);
 
-        end_effector_pose_lb_now.p.data[0]=end_effector_pose_lbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*1-x*0.2;
+        end_effector_pose_lb_now.p.data[1]=end_effector_pose_lbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*1-y*0.2;
         end_effector_pose_lb_now.p.data[2]=end_effector_pose_lbstart.p.data[2];
         int rc_lb = tracik_lb_solver.CartToJnt(result_lblast, end_effector_pose_lb_now, result_lbnow);
 
-        end_effector_pose_rb_now.p.data[0]=end_effector_pose_rbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*4-x*0.2;
+        end_effector_pose_rb_now.p.data[1]=end_effector_pose_rbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*4-y*0.2;
         end_effector_pose_rb_now.p.data[2]=end_effector_pose_rbstart.p.data[2];
         int rc_rb= tracik_rb_solver.CartToJnt(result_rblast, end_effector_pose_rb_now, result_rbnow);
 
@@ -811,6 +881,7 @@ int main(int argc,char* argv[])
         joint_state.position[19] = result_lmnow(1);
         joint_state.position[20] = result_lmnow(2);
 
+
         joint_state.position[24] = result_lbnow(0);
         joint_state.position[25] = result_lbnow(1);
         joint_state.position[26] = result_lbnow(2);
@@ -818,37 +889,54 @@ int main(int argc,char* argv[])
         joint_state.position[30] = result_rbnow(0);
         joint_state.position[31] = result_rbnow(1);
         joint_state.position[32] = result_rbnow(2);
-
-        //将数据写入hexapod的arduino话题
-        int m=0;
-        int n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                hexapod_joint.position[m]= joint_state.position[n]*180.0/pi;
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
-        //写入文件
-        m=0,n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fprintf(fp,"%.2f",joint_state.position[n]*180.0/pi);
-	            fputs(",",fp);
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
+	
+    fprintf(fp,"%.2f",joint_state.position[0]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[1]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[2]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[6]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[7]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[8]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[12]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[13]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[14]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[18]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[19]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[20]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[24]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[25]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[26]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[30]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[31]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[32]*180.0/pi);
+	fputs(",",fp);
 	fputs("\n",fp);
 
+//	fputs(joint_state.position[0],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[1],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[2],fp);
+//	fputs(",",fp);
+//	fputs("\n",fp);
+
         joint_pub.publish(joint_state);
-        hexapod_jointpub.publish(hexapod_joint);
  
         result_rmlast=result_rmnow;
         result_rflast=result_rfnow;
@@ -863,31 +951,31 @@ int main(int argc,char* argv[])
     for(int i=1;i<=20;i++)
     { 
         double t=2*pi*i/20;
-        double x=stepx*(t-sin(t));
+        double y=stepx*(t-sin(t));
         double z=stepz*(1-cos(t));
         //右边
-        end_effector_pose_rm_now.p.data[0]=end_effector_pose_rmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*4-x*0.2;
+        end_effector_pose_rm_now.p.data[1]=end_effector_pose_rmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*4-y*0.2;
         end_effector_pose_rm_now.p.data[2]=end_effector_pose_rmstart.p.data[2];
         int rc_rm = tracik_rm_solver.CartToJnt(result_rmlast, end_effector_pose_rm_now, result_rmnow);
 
-        end_effector_pose_rf_now.p.data[0]=end_effector_pose_rfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*0-x*0.2;
+        end_effector_pose_rf_now.p.data[1]=end_effector_pose_rfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*0-y*0.2;
         end_effector_pose_rf_now.p.data[2]=end_effector_pose_rfstart.p.data[2];
         int rc_rf = tracik_rf_solver.CartToJnt(result_rflast, end_effector_pose_rf_now, result_rfnow);
         print_frame_lambda(end_effector_pose_rf_now);
 
-        end_effector_pose_lf_now.p.data[0]=end_effector_pose_lfstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*3-x*0.2;
+        end_effector_pose_lf_now.p.data[1]=end_effector_pose_lfstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*3-y*0.2;
         end_effector_pose_lf_now.p.data[2]=end_effector_pose_lfstart.p.data[2];
         int rc_lf = tracik_lf_solver.CartToJnt(result_lflast, end_effector_pose_lf_now, result_lfnow);
 
-        end_effector_pose_lm_now.p.data[0]=end_effector_pose_lmstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*1-x*0.2;
+        end_effector_pose_lm_now.p.data[1]=end_effector_pose_lmstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*1-y*0.2;
         end_effector_pose_lm_now.p.data[2]=end_effector_pose_lmstart.p.data[2];
         int rc_lm = tracik_lm_solver.CartToJnt(result_lmlast, end_effector_pose_lm_now, result_lmnow);
 
-        end_effector_pose_lb_now.p.data[0]=end_effector_pose_lbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*2-x*0.2;
+        end_effector_pose_lb_now.p.data[1]=end_effector_pose_lbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*2-y*0.2;
         end_effector_pose_lb_now.p.data[2]=end_effector_pose_lbstart.p.data[2];
         int rc_lb = tracik_lb_solver.CartToJnt(result_lblast, end_effector_pose_lb_now, result_lbnow);
 
-        end_effector_pose_rb_now.p.data[0]=end_effector_pose_rbstart.p.data[0]+stepx*pi-2*stepx*pi*0.2*5+x;
+        end_effector_pose_rb_now.p.data[1]=end_effector_pose_rbstart.p.data[1]+stepx*pi-2*stepx*pi*0.2*5+y;
         end_effector_pose_rb_now.p.data[2]=end_effector_pose_rbstart.p.data[2]+z;
         int rc_rb= tracik_rb_solver.CartToJnt(result_rblast, end_effector_pose_rb_now, result_rbnow);
 
@@ -909,6 +997,7 @@ int main(int argc,char* argv[])
         joint_state.position[19] = result_lmnow(1);
         joint_state.position[20] = result_lmnow(2);
 
+
         joint_state.position[24] = result_lbnow(0);
         joint_state.position[25] = result_lbnow(1);
         joint_state.position[26] = result_lbnow(2);
@@ -916,37 +1005,54 @@ int main(int argc,char* argv[])
         joint_state.position[30] = result_rbnow(0);
         joint_state.position[31] = result_rbnow(1);
         joint_state.position[32] = result_rbnow(2);
-
-        //将数据写入hexapod的arduino话题
-        int m=0;
-        int n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                hexapod_joint.position[m]= joint_state.position[n]*180.0/pi;
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
-        //写入文件
-        m=0,n=0;
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fprintf(fp,"%.2f",joint_state.position[n]*180.0/pi);
-	            fputs(",",fp);
-                m++;
-                n++;
-            }
-            n=n+3;
-        }
+	
+    fprintf(fp,"%.2f",joint_state.position[0]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[1]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[2]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[6]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[7]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[8]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[12]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[13]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[14]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[18]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[19]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[20]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[24]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[25]*180.0/pi);
+	fputs(",",fp);
+    fprintf(fp,"%.2f",joint_state.position[26]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[30]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[31]*180.0/pi);
+	fputs(",",fp);
+	fprintf(fp,"%.2f",joint_state.position[32]*180.0/pi);
+	fputs(",",fp);
 	fputs("\n",fp);
 
+//	fputs(joint_state.position[0],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[1],fp);
+//	fputs(",",fp);
+//	fputs(joint_state.position[2],fp);
+//	fputs(",",fp);
+//	fputs("\n",fp);
+
         joint_pub.publish(joint_state);
-        hexapod_jointpub.publish(hexapod_joint);
  
         result_rmlast=result_rmnow;
         result_rflast=result_rfnow;
@@ -956,9 +1062,9 @@ int main(int argc,char* argv[])
         result_rblast=result_rbnow;
         r.sleep();
     }
-	// fclose(fp);
-	// for(int i=0;i<=1000;i++)
-	// 	r.sleep();
+	fclose(fp);
+	for(int i=0;i<=1000;i++)
+		r.sleep();
     }
     return 0;
  
